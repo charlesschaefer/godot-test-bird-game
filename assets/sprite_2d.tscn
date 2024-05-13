@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b753neapdlv83"]
+
+[ext_resource type="Texture2D" uid="uid://cy8sdtah2a3ve" path="res://bird-svgrepo-com.svg" id="1_d7oh4"]
+[ext_resource type="Script" path="res://sprite_2d.gd" id="2_ytuxy"]
+
+[node name="Sprite2D" type="Sprite2D"]
+position = Vector2(585, 302)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_d7oh4")
+script = ExtResource("2_ytuxy")

@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjb3gyhpj1yny"]
+
+[ext_resource type="Texture2D" uid="uid://cy4g4m7kstbic" path="res://assets/bird1-c.png" id="1_jtc4n"]
+[ext_resource type="Script" path="res://bird.gd" id="1_m11w1"]
+[ext_resource type="Texture2D" uid="uid://da8llwx1bdfo4" path="res://assets/bird1-b.png" id="2_th0af"]
+[ext_resource type="Texture2D" uid="uid://c6p12eqswwjed" path="res://assets/bird1-a.png" id="3_trae1"]
+[ext_resource type="Texture2D" uid="uid://csw76wov4xpab" path="res://assets/bird2-a.png" id="5_re76m"]
+[ext_resource type="Texture2D" uid="uid://dbsq46whla0fa" path="res://assets/bird2-b.png" id="6_dbway"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4rm6s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_trae1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_th0af")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_jtc4n")
+}],
+"loop": true,
+"name": &"0",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_dbway")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_re76m")
+}],
+"loop": true,
+"name": &"1",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jtqx"]
+size = Vector2(446.5, 450.5)
+
+[node name="bird" type="Area2D"]
+scale = Vector2(0.2, 0.2)
+script = ExtResource("1_m11w1")
+
+[node name="birdAnimation" type="AnimatedSprite2D" parent="."]
+process_mode = 3
+sprite_frames = SubResource("SpriteFrames_4rm6s")
+animation = &"1"
+autoplay = "0"
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(224.75, 224.75)
+shape = SubResource("RectangleShape2D_5jtqx")
