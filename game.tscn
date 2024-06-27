@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b5b8oe8ub6qte"]
+[gd_scene load_steps=20 format=3 uid="uid://b5b8oe8ub6qte"]
 
 [ext_resource type="Texture2D" uid="uid://bycp4u3n56d3x" path="res://assets/bg/bg1.png" id="1_7xnws"]
 [ext_resource type="Script" path="res://game.gd" id="1_td33d"]
@@ -9,11 +9,12 @@
 [ext_resource type="AudioStream" uid="uid://c1fsjj8cv0pxv" path="res://assets/audio/correct.wav" id="6_n3ab3"]
 [ext_resource type="Theme" uid="uid://cxh17iwcfbeu0" path="res://game_theme.tres" id="7_wha37"]
 [ext_resource type="AudioStream" uid="uid://328awdwpmdus" path="res://assets/audio/music.wav" id="8_sig2p"]
+[ext_resource type="Texture2D" uid="uid://jlp6omt40nw5" path="res://assets/medal.webp" id="9_2qgwi"]
+[ext_resource type="Script" path="res://PanelPlacar2.gd" id="9_c8yfr"]
 [ext_resource type="AudioStream" uid="uid://opcdl50nj0is" path="res://assets/audio/level.wav" id="9_hcgip"]
-[ext_resource type="Texture2D" uid="uid://bxqhvgtqwx4ls" path="res://assets/medal.png" id="9_tmxus"]
 [ext_resource type="Script" path="res://TelaColetaDados.gd" id="10_80rlu"]
 [ext_resource type="PackedScene" uid="uid://bqc6tkqb0yqiq" path="res://narrador.tscn" id="10_jnnov"]
-[ext_resource type="Texture2D" uid="uid://b58fi0d1g8hbp" path="res://assets/coin.png" id="10_myjj5"]
+[ext_resource type="Texture2D" uid="uid://dg7r61h75ab8e" path="res://assets/diamond.webp" id="14_knlpr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cimmk"]
 size = Vector2(450, 450)
@@ -266,23 +267,19 @@ offset_top = 379.0
 offset_right = 116.0
 offset_bottom = 439.0
 theme = ExtResource("7_wha37")
+script = ExtResource("9_c8yfr")
 
-[node name="3069070" type="Sprite2D" parent="playArea/score/PanelPlacar2"]
-position = Vector2(80, 36)
-scale = Vector2(0.0976563, 0.091712)
-texture = ExtResource("9_tmxus")
-
-[node name="Coin" type="Sprite2D" parent="playArea/score/PanelPlacar2"]
-position = Vector2(21, 39)
-scale = Vector2(0.0751953, 0.0498047)
-texture = ExtResource("10_myjj5")
+[node name="Medal" type="Sprite2D" parent="playArea/score/PanelPlacar2"]
+position = Vector2(80, 31)
+scale = Vector2(0.0785156, 0.0785156)
+texture = ExtResource("9_2qgwi")
 
 [node name="level" type="Label" parent="playArea/score/PanelPlacar2"]
 layout_mode = 0
-offset_left = 72.0
-offset_top = 23.0
-offset_right = 89.0
-offset_bottom = 37.0
+offset_left = 73.0
+offset_top = 46.0
+offset_right = 90.0
+offset_bottom = 60.0
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -301,6 +298,11 @@ offset_top = 11.0
 offset_right = 29.0
 offset_bottom = 25.0
 text = "00"
+
+[node name="Diamond" type="Sprite2D" parent="playArea/score/PanelPlacar2"]
+position = Vector2(22, 43)
+scale = Vector2(0.0976562, 0.0976562)
+texture = ExtResource("14_knlpr")
 
 [node name="Narrador" parent="playArea" instance=ExtResource("10_jnnov")]
 visible = false
@@ -391,6 +393,10 @@ max_length = 10
 layout_mode = 2
 text = "Enviar"
 
+[connection signal="correct_selection" from="." to="playArea/score/PanelPlacar2" method="_on_game_correct_selection"]
+[connection signal="level_change" from="." to="." method="_on_level_change"]
+[connection signal="level_change" from="." to="playArea/feedback" method="_on_game_level_change"]
+[connection signal="level_change" from="." to="playArea/score/PanelPlacar2" method="_on_game_level_change"]
 [connection signal="area_entered" from="playArea" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="playArea" to="." method="_on_area_2d_area_exited"]
 [connection signal="timeout" from="playArea/bird/spawnTimer" to="." method="spawn_bird"]

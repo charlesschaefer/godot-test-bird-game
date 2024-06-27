@@ -47,3 +47,25 @@ func hide_msg():
 	visible = false
 	self.modulate.a = 1
 	blink = false
+
+
+func _on_game_level_change(next_level):
+	# feedback
+	var idx = (next_level - 1) % 3
+	if idx == 0:
+		idx = 3
+	print("idx: ", idx)
+	var ntimer = Timer.new();
+	ntimer.connect("timeout", func(): 
+		
+		get_parent().get_node("Bg1").visible = false
+		get_parent().get_node("Bg2").visible = false
+		get_parent().get_node("Bg3").visible = false
+		
+		get_parent().get_node("Bg" + str(idx)).visible = true
+		remove_child(ntimer)
+		ntimer.queue_free()
+	)
+	ntimer.one_shot = true
+	add_child(ntimer)
+	ntimer.start(1)

@@ -1,5 +1,10 @@
 extends Node2D
 
+# @TODO: emit signals correct_selection, wrong_selection and level_change
+signal correct_selection
+signal wrong_selection
+signal level_change
+
 const AUTO_RESPAWN_INTERVAL = 2.5
 const BIRD_TYPES = 2
 const AUTO_RESPAWN = true
@@ -124,13 +129,13 @@ func save_user_result(type:RESULT_TYPE):
 	update_reaction_times(reaction_time)
 	
 	var number_label = get_node("playArea/score/PanelPlacar/" + result_labels[type] + "_value")
-
 	var value = user_steps.count(type)
 	number_label.text = str(value)
 	
-	# updates the user coins
 	if type == RESULT_TYPE.CORRECT:
-		get_node("playArea/score/PanelPlacar2/coins_label").text = "%02d" % value
+		correct_selection.emit(value)
+	else:
+		wrong_selection.emit(value)
 
 func update_reaction_times(reaction_time):
 	get_node("playArea/score/PanelTempoReação/label_ultimo")\
@@ -164,40 +169,13 @@ func new_level():
 	bird_object.update_speed(next_level * LEVEL_MULTIPLIER)
 	
 	current_level = next_level
-	get_node("playArea/score/PanelPlacar2/level").text = str(current_level)
 	get_node("playArea/score/PanelPlacar/level").text = str(current_level)
 	get_node("playArea/score/PanelPlacar/lost_value").text = "0"
 	get_node("playArea/score/PanelPlacar/correct_value").text = "0"
 	get_node("playArea/score/PanelPlacar/error_value").text = "0"
 	
-	var timer = get_node("playArea/bird/spawnTimer")
-	timer.stop()
-	
-	var timer2 = get_node("playArea/feedback/feedbackTimer")
-	feedback(RESULT_TYPE.CORRECT, MSG_LEVEL % [next_level], false, true)
-	timer2.stop()
-	
-	get_node("level_audio").play()
-	timer2.start(AUTO_RESPAWN_INTERVAL)
-	timer.start(AUTO_RESPAWN_INTERVAL + 1)
-	
-	var idx = current_level % 3
-	if idx == 0:
-		idx = 3
-	print("idx: ", idx)
-	var ntimer = Timer.new();
-	ntimer.connect("timeout", func(): 
-		get_node("playArea/Bg1").visible = false
-		get_node("playArea/Bg2").visible = false
-		get_node("playArea/Bg3").visible = false
-		
-		get_node("playArea/Bg" + str(idx)).visible = true
-		remove_child(ntimer)
-		ntimer.queue_free()
-	)
-	ntimer.one_shot = true
-	add_child(ntimer)
-	ntimer.start(1)
+	level_change.emit(next_level)
+
 
 
 func _on_area_2d_area_entered(area):
@@ -245,3 +223,17 @@ func _on_continue_game_pressed():
 func start_game():
 	show_narrator_screen()
 	get_node("background_audio").play()
+
+
+func _on_level_change(next_level):
+	var timer = get_node("playArea/bird/spawnTimer")
+	timer.stop()
+	
+	var timer2 = get_node("playArea/feedback/feedbackTimer")
+	feedback(RESULT_TYPE.CORRECT, MSG_LEVEL % [next_level], false, true)
+	timer2.stop()
+	
+	get_node("level_audio").play()
+	timer2.start(AUTO_RESPAWN_INTERVAL)
+	timer.start(AUTO_RESPAWN_INTERVAL + 1)
+
