@@ -237,3 +237,4 @@ func _on_continue_game_pressed():
 
 func start_game():
 	show_narrator_screen()
+	get_node("background_audio").play()
