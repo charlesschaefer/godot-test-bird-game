@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b5b8oe8ub6qte"]
+[gd_scene load_steps=19 format=3 uid="uid://b5b8oe8ub6qte"]
 
 [ext_resource type="Texture2D" uid="uid://bycp4u3n56d3x" path="res://assets/bg/bg1.png" id="1_7xnws"]
 [ext_resource type="Script" path="res://game.gd" id="1_td33d"]
@@ -10,8 +10,10 @@
 [ext_resource type="Theme" uid="uid://cxh17iwcfbeu0" path="res://game_theme.tres" id="7_wha37"]
 [ext_resource type="AudioStream" uid="uid://328awdwpmdus" path="res://assets/audio/music.wav" id="8_sig2p"]
 [ext_resource type="AudioStream" uid="uid://opcdl50nj0is" path="res://assets/audio/level.wav" id="9_hcgip"]
+[ext_resource type="Texture2D" uid="uid://bxqhvgtqwx4ls" path="res://assets/medal.png" id="9_tmxus"]
 [ext_resource type="Script" path="res://TelaColetaDados.gd" id="10_80rlu"]
 [ext_resource type="PackedScene" uid="uid://bqc6tkqb0yqiq" path="res://narrador.tscn" id="10_jnnov"]
+[ext_resource type="Texture2D" uid="uid://b58fi0d1g8hbp" path="res://assets/coin.png" id="10_myjj5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cimmk"]
 size = Vector2(450, 450)
@@ -97,16 +99,16 @@ stream = ExtResource("5_a4tnp")
 stream = ExtResource("6_n3ab3")
 
 [node name="score" type="Area2D" parent="playArea"]
-visible = false
 
-[node name="Panel" type="Panel" parent="playArea/score"]
+[node name="PanelPlacar" type="Panel" parent="playArea/score"]
+visible = false
 offset_left = 10.0
 offset_top = 379.0
 offset_right = 116.0
 offset_bottom = 439.0
 theme = ExtResource("7_wha37")
 
-[node name="lost_value" type="Label" parent="playArea/score/Panel"]
+[node name="lost_value" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.428
@@ -120,7 +122,7 @@ theme_override_font_sizes/font_size = 9
 text = "0"
 horizontal_alignment = 2
 
-[node name="lost_label" type="Label" parent="playArea/score/Panel"]
+[node name="lost_label" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.428
@@ -133,7 +135,7 @@ theme_type_variation = &"HeaderSmall"
 theme_override_font_sizes/font_size = 9
 text = "perdidos:"
 
-[node name="correct_value" type="Label" parent="playArea/score/Panel"]
+[node name="correct_value" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 33.0
@@ -143,7 +145,7 @@ theme_override_font_sizes/font_size = 9
 text = "0"
 horizontal_alignment = 2
 
-[node name="correct_label" type="Label" parent="playArea/score/Panel"]
+[node name="correct_label" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 33.0
@@ -152,7 +154,7 @@ offset_bottom = 49.0
 theme_override_font_sizes/font_size = 9
 text = "Corretos:"
 
-[node name="error_value" type="Label" parent="playArea/score/Panel"]
+[node name="error_value" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 58.0
 offset_top = 21.0
@@ -162,7 +164,7 @@ theme_override_font_sizes/font_size = 9
 text = "0"
 horizontal_alignment = 2
 
-[node name="error_label" type="Label" parent="playArea/score/Panel"]
+[node name="error_label" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 14.0
 offset_top = 21.0
@@ -171,7 +173,7 @@ offset_bottom = 37.0
 theme_override_font_sizes/font_size = 9
 text = "Erros:"
 
-[node name="Label" type="Label" parent="playArea/score/Panel"]
+[node name="LabelPlacar" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
@@ -179,7 +181,7 @@ offset_right = 67.0
 offset_bottom = 20.0
 text = "Placar:"
 
-[node name="Label2" type="Label" parent="playArea/score/Panel"]
+[node name="LabelNível" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 84.0
 offset_top = 17.0
@@ -189,7 +191,7 @@ theme_override_font_sizes/font_size = 7
 text = "nível"
 horizontal_alignment = 2
 
-[node name="level" type="Label" parent="playArea/score/Panel"]
+[node name="level" type="Label" parent="playArea/score/PanelPlacar"]
 layout_mode = 0
 offset_left = 84.0
 offset_top = 3.0
@@ -199,14 +201,15 @@ text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Panel2" type="Panel" parent="playArea/score"]
+[node name="PanelTempoReação" type="Panel" parent="playArea/score"]
+visible = false
 offset_left = 336.0
 offset_top = 379.0
 offset_right = 442.0
 offset_bottom = 439.0
 theme = ExtResource("7_wha37")
 
-[node name="Label" type="Label" parent="playArea/score/Panel2"]
+[node name="Label" type="Label" parent="playArea/score/PanelTempoReação"]
 layout_mode = 0
 offset_left = 4.0
 offset_top = 4.0
@@ -214,7 +217,7 @@ offset_right = 67.0
 offset_bottom = 20.0
 text = "Tempo de Reação:"
 
-[node name="Label2" type="Label" parent="playArea/score/Panel2"]
+[node name="Label2" type="Label" parent="playArea/score/PanelTempoReação"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 21.0
@@ -224,7 +227,7 @@ text = "Último:"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Label3" type="Label" parent="playArea/score/Panel2"]
+[node name="Label3" type="Label" parent="playArea/score/PanelTempoReação"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 37.0
@@ -234,7 +237,7 @@ text = "Média:"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="label_ultimo" type="Label" parent="playArea/score/Panel2"]
+[node name="label_ultimo" type="Label" parent="playArea/score/PanelTempoReação"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 21.0
@@ -245,7 +248,7 @@ text = "0 ms"
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="label_media" type="Label" parent="playArea/score/Panel2"]
+[node name="label_media" type="Label" parent="playArea/score/PanelTempoReação"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 37.0
@@ -255,6 +258,49 @@ theme_override_font_sizes/font_size = 9
 text = "0 ms"
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="PanelPlacar2" type="Panel" parent="playArea/score"]
+visible = false
+offset_left = 10.0
+offset_top = 379.0
+offset_right = 116.0
+offset_bottom = 439.0
+theme = ExtResource("7_wha37")
+
+[node name="3069070" type="Sprite2D" parent="playArea/score/PanelPlacar2"]
+position = Vector2(80, 36)
+scale = Vector2(0.0976563, 0.091712)
+texture = ExtResource("9_tmxus")
+
+[node name="Coin" type="Sprite2D" parent="playArea/score/PanelPlacar2"]
+position = Vector2(21, 39)
+scale = Vector2(0.0751953, 0.0498047)
+texture = ExtResource("10_myjj5")
+
+[node name="level" type="Label" parent="playArea/score/PanelPlacar2"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 23.0
+offset_right = 89.0
+offset_bottom = 37.0
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LabelLevel" type="Label" parent="playArea/score/PanelPlacar2"]
+layout_mode = 0
+offset_left = 67.0
+offset_right = 94.0
+offset_bottom = 14.0
+text = "Nível"
+
+[node name="coins_label" type="Label" parent="playArea/score/PanelPlacar2"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 11.0
+offset_right = 29.0
+offset_bottom = 25.0
+text = "00"
 
 [node name="Narrador" parent="playArea" instance=ExtResource("10_jnnov")]
 visible = false
@@ -320,7 +366,7 @@ theme_override_constants/separation = 10
 
 [node name="LabelEmail" type="Label" parent="TelaColetaDados/MarginContainer/Rows/Cols2"]
 layout_mode = 2
-text = "Email:"
+text = "Email:  "
 
 [node name="InputEmail" type="LineEdit" parent="TelaColetaDados/MarginContainer/Rows/Cols2"]
 layout_mode = 2
@@ -339,6 +385,7 @@ text = "Nascimento: "
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "dd/mm/aaaa"
+max_length = 10
 
 [node name="Button" type="Button" parent="TelaColetaDados/MarginContainer/Rows"]
 layout_mode = 2

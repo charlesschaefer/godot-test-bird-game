@@ -3,9 +3,9 @@ extends Area2D
 const MSGS = [
 	"Olá, ser humaninho lindo! \nQue bom que chegou... Precisamos da sua ajuda!",
 	"Estamos vendo vários pássaros no aeroporto ultimamente. \nIsso é muito perigoso... e precisamos que descubra para onde estão indo.",
-	"Assim podemos enviar os drones de abatimento das aves.",
+	"Assim podemos enviar os drones que vão espantar as aves.",
 	"Para isso, basta usar as teclas direcionais para indicar para qual lado o pássaro que você viu está indo!",
-	"Todos os nossos passageiros contam com isso! Nós contamos com você"
+	"Todos os nossos passageiros contam com isso! E você ganha uma moeda para cada pássaro que identificar corretamente."
 ]
 
 const TW_INTERVAL = 0.03

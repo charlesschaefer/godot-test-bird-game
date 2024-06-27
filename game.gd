@@ -123,12 +123,17 @@ func save_user_result(type:RESULT_TYPE):
 	
 	update_reaction_times(reaction_time)
 	
-	var number_label = get_node("playArea/score/Panel/" + result_labels[type] + "_value")
+	var number_label = get_node("playArea/score/PanelPlacar/" + result_labels[type] + "_value")
+
 	var value = user_steps.count(type)
 	number_label.text = str(value)
+	
+	# updates the user coins
+	if type == RESULT_TYPE.CORRECT:
+		get_node("playArea/score/PanelPlacar2/coins_label").text = "%02d" % value
 
 func update_reaction_times(reaction_time):
-	get_node("playArea/score/Panel2/label_ultimo")\
+	get_node("playArea/score/PanelTempoReação/label_ultimo")\
 		.text = str(reaction_time) + " ms"
 	
 	var sum = user_steps_reaction_time[RESULT_TYPE.CORRECT]\
@@ -141,7 +146,7 @@ func update_reaction_times(reaction_time):
 	
 	print("avg", average, "size", user_steps_reaction_time[RESULT_TYPE.CORRECT].size())
 	
-	get_node("playArea/score/Panel2/label_media")\
+	get_node("playArea/score/PanelTempoReação/label_media")\
 		.text = "%d ms" % [average]
 
 func level_controller():
@@ -159,10 +164,11 @@ func new_level():
 	bird_object.update_speed(next_level * LEVEL_MULTIPLIER)
 	
 	current_level = next_level
-	get_node("playArea/score/Panel/level").text = str(current_level)
-	get_node("playArea/score/Panel/lost_value").text = "0"
-	get_node("playArea/score/Panel/correct_value").text = "0"
-	get_node("playArea/score/Panel/error_value").text = "0"
+	get_node("playArea/score/PanelPlacar2/level").text = str(current_level)
+	get_node("playArea/score/PanelPlacar/level").text = str(current_level)
+	get_node("playArea/score/PanelPlacar/lost_value").text = "0"
+	get_node("playArea/score/PanelPlacar/correct_value").text = "0"
+	get_node("playArea/score/PanelPlacar/error_value").text = "0"
 	
 	var timer = get_node("playArea/bird/spawnTimer")
 	timer.stop()
@@ -227,6 +233,7 @@ func _on_narrador_finished():
 	narrador.visible = false
 	remove_child(narrador)
 	narrador.queue_free()
+	get_node("playArea/score/PanelPlacar2").show()
 	spawn_bird()
 
 
