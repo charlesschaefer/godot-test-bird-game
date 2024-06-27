@@ -52,7 +52,8 @@ var level_changed = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	show_narrator_screen()
+	#show_narrator_screen()
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -218,6 +219,7 @@ func stop_reaction_timer():
 
 func show_narrator_screen():
 	get_node("playArea/Narrador").start()
+	get_node("playArea/Bg1").show()
 
 func _on_narrador_finished():
 	get_node("playArea/score").visible = true
@@ -232,3 +234,6 @@ func _on_continue_game_pressed():
 	print("foi?")
 	get_tree().paused = false
 	get_node("continue_game").visible = false
+
+func start_game():
+	show_narrator_screen()

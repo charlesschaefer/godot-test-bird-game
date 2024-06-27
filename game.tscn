@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b5b8oe8ub6qte"]
+[gd_scene load_steps=17 format=3 uid="uid://b5b8oe8ub6qte"]
 
 [ext_resource type="Texture2D" uid="uid://bycp4u3n56d3x" path="res://assets/bg/bg1.png" id="1_7xnws"]
 [ext_resource type="Script" path="res://game.gd" id="1_td33d"]
@@ -10,6 +10,7 @@
 [ext_resource type="Theme" uid="uid://cxh17iwcfbeu0" path="res://game_theme.tres" id="7_wha37"]
 [ext_resource type="AudioStream" uid="uid://328awdwpmdus" path="res://assets/audio/music.wav" id="8_sig2p"]
 [ext_resource type="AudioStream" uid="uid://opcdl50nj0is" path="res://assets/audio/level.wav" id="9_hcgip"]
+[ext_resource type="Script" path="res://TelaColetaDados.gd" id="10_80rlu"]
 [ext_resource type="PackedScene" uid="uid://bqc6tkqb0yqiq" path="res://narrador.tscn" id="10_jnnov"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cimmk"]
@@ -30,6 +31,9 @@ Panel/colors/correct = Color(0, 0.694118, 0, 0.894118)
 Panel/colors/error = Color(0.839216, 0, 0, 0.894118)
 Panel/styles/panel = SubResource("StyleBoxFlat_q1t22")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f5vwg"]
+bg_color = Color(0.31802, 0.31802, 0.31802, 1)
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_td33d")
 
@@ -41,6 +45,7 @@ position = Vector2(225, 225)
 shape = SubResource("RectangleShape2D_cimmk")
 
 [node name="Bg1" type="Sprite2D" parent="playArea"]
+visible = false
 position = Vector2(225.1, 225.1)
 scale = Vector2(0.56, 0.56)
 texture = ExtResource("1_7xnws")
@@ -252,6 +257,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Narrador" parent="playArea" instance=ExtResource("10_jnnov")]
+visible = false
 position = Vector2(-45, 152)
 scale = Vector2(1.1, 1.1)
 
@@ -276,9 +282,73 @@ offset_bottom = 80.0
 theme = ExtResource("7_wha37")
 text = "CONTINUAR"
 
+[node name="TelaColetaDados" type="PanelContainer" parent="."]
+offset_left = 78.0
+offset_top = 102.0
+offset_right = 387.0
+offset_bottom = 383.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f5vwg")
+script = ExtResource("10_80rlu")
+
+[node name="MarginContainer" type="MarginContainer" parent="TelaColetaDados"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Rows" type="VBoxContainer" parent="TelaColetaDados/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Cols1" type="HBoxContainer" parent="TelaColetaDados/MarginContainer/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelNome" type="Label" parent="TelaColetaDados/MarginContainer/Rows/Cols1"]
+layout_mode = 2
+text = "Nome: "
+
+[node name="InputNome" type="LineEdit" parent="TelaColetaDados/MarginContainer/Rows/Cols1"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Seu nome"
+caret_blink = true
+
+[node name="Cols2" type="HBoxContainer" parent="TelaColetaDados/MarginContainer/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelEmail" type="Label" parent="TelaColetaDados/MarginContainer/Rows/Cols2"]
+layout_mode = 2
+text = "Email:"
+
+[node name="InputEmail" type="LineEdit" parent="TelaColetaDados/MarginContainer/Rows/Cols2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Seu email para contato"
+
+[node name="Cols3" type="HBoxContainer" parent="TelaColetaDados/MarginContainer/Rows"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LabelNascimento" type="Label" parent="TelaColetaDados/MarginContainer/Rows/Cols3"]
+layout_mode = 2
+text = "Nascimento: "
+
+[node name="InputNascimento" type="LineEdit" parent="TelaColetaDados/MarginContainer/Rows/Cols3"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "dd/mm/aaaa"
+
+[node name="Button" type="Button" parent="TelaColetaDados/MarginContainer/Rows"]
+layout_mode = 2
+text = "Enviar"
+
 [connection signal="area_entered" from="playArea" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="playArea" to="." method="_on_area_2d_area_exited"]
 [connection signal="timeout" from="playArea/bird/spawnTimer" to="." method="spawn_bird"]
 [connection signal="timeout" from="playArea/feedback/feedbackTimer" to="playArea/feedback" method="hide_msg"]
 [connection signal="finished" from="playArea/Narrador" to="." method="_on_narrador_finished"]
 [connection signal="pressed" from="continue_game" to="." method="_on_continue_game_pressed"]
+[connection signal="pressed" from="TelaColetaDados/MarginContainer/Rows/Button" to="TelaColetaDados" method="_on_button_enviar_pressed"]
